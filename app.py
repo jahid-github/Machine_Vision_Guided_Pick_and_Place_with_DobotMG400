@@ -1,45 +1,16 @@
-# Entry point for the vision-driven pick‑and‑place Streamlit application.
-#
-# When deploying this project you need only modify this file; all other
-# modules are imported from the existing repository layout.  The package
-# dependencies are:
-#   * streamlit
-#   * opencv-python
-#   * numpy
-#   * pandas (optional, used for nicer tables)
-#
-# Install them before running the app (e.g. ``pip install streamlit opencv-python
-# numpy pandas``) or provide a requirements.txt alongside the project.
-
 from pathlib import Path
 import json
-
 import cv2
 import numpy as np
 try:
     import pandas as pd
 except ImportError:
     pd = None  # pandas is optional; we'll fall back to built-in streamlit tables
-
-# streamlit is an optional dependency; if it's not installed the module will
-# still import and a lightweight CLI will be used instead of the web UI.
 try:
     import streamlit as st
 except ImportError:
     st = None
-
-# detection and robot modules have been reorganized in the repository; the original
-# `Detector` and `DobotController` classes no longer exist.  Rather than adding new
-# files we implement a lightweight detector locally and reuse the existing
-# `robot_control` helpers.  This keeps all deployment logic confined to this
-# single file as requested.
-
-# we will import helpers from the current project structure
 from robot import robot_control
-
-# note: `pixel_to_robot` mapping is implemented internally below since the
-# utility module is not present in the workspace
-
 def _pixel_to_robot(u, v, H):
     """Apply a 3x3 homography *H* to pixel coordinates (u,v) and return
     robot coordinates (x,y)."""
@@ -47,32 +18,15 @@ def _pixel_to_robot(u, v, H):
     pr = H @ p
     pr = pr / pr[2]
     return float(pr[0][0]), float(pr[1][0])
-
-
-
-# ---------------------------------------------------------------------------
-# lightweight object detector used by the Streamlit UI
-# ---------------------------------------------------------------------------
 class Detector:
-    """Simple colour/shape detector that works on a static image.
-
-    This replaces the missing ``perception.detector`` module from the old
-    application.  The implementation is intentionally minimal – it segments the
-    image in HSV space, finds contours and classifies them as ``circle`` or
-    ``square`` by looking at the polygon approximation.  The colour of an
-    object is determined from whichever mask produced it.
-    """
-
     # colour thresholds in HSV (lower/upper pairs). red uses two ranges.
     _COLOR_RANGES = {
         "red": [([0, 120, 70], [10, 255, 255]), ([170, 120, 70], [180, 255, 255])],
         "green": [([36, 100, 100], [86, 255, 255])],
         "blue": [([94, 80, 2], [126, 255, 255])],
     }
-
     def find_objects(self, image, color_name="any", shape_type="any"):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
         # build mask according to requested colour
         mask = None
         if color_name == "any":
@@ -198,13 +152,6 @@ def _to_rgb(image_bgr):
 
 
 def _build_rows(detected_objects, H):
-    """Convert raw detector output into the table rows expected by the UI.
-
-    The detector produced a list of dictionaries; each entry must contain at
-    least ``pixel_center``.  The colour/shape fields are optional.  If a
-    homography matrix *H* is available the pixel coordinates are mapped to
-    robot coordinates here using ``_pixel_to_robot``.
-    """
     rows = []
     for idx, obj in enumerate(detected_objects, start=1):
         # support the legacy format returned by ``perception.detect_color`` as
@@ -500,4 +447,5 @@ if __name__ == "__main__":
         print("Streamlit not found; switching to CLI mode")
         _cli_main()
     else:
+
         main()
