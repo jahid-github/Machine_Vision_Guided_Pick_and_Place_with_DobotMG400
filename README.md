@@ -1,11 +1,4 @@
 # Vision-Guided Pick & Place with Dobot MG400
-
-**Submitted by:**
-
-Md Jahidul Islam
-
-K M Arafat Islam
-
 ---
 
 ## Objective
