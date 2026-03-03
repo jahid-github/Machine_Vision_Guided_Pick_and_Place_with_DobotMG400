@@ -138,7 +138,9 @@ python main.py detect --mode plan
 * No robot movement
 
 **Annotated Image**
+
 ![](outputs/9.jpeg) 
+
 ---
 
 ### Execute Mode
