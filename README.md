@@ -1,4 +1,4 @@
-# Lab Report — Vision-Guided Pick & Place with Dobot MG400
+# Vision-Guided Pick & Place with Dobot MG400
 
 **Submitted by:**
 
