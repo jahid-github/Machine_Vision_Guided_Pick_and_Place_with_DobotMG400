@@ -176,14 +176,13 @@ ui/app.py
 
 ---
 
-### 📷 UI Screenshot
-
-<!-- ADD IMAGE PATH BELOW -->
-
-![]()
-
+### UI Screenshot
+![](outputs/1.jpeg)
+![](outputs/2.jpeg)
+![](outputs/3.jpeg)
+![](outputs/4.jpeg)
+![](outputs/5.jpeg)
 ---
-
 # Development Choices
 
 ## 1. Planar Homography
@@ -247,15 +246,6 @@ Output:
 * Saves annotated detection image
 * No robot motion
 
----
-
-### 📷 Plan Mode Result
-
-<!-- ADD IMAGE PATH BELOW -->
-
-![]()
-
----
 
 ## Execute Mode (Pick & Place)
 
@@ -275,15 +265,6 @@ Process:
 6. Vacuum OFF
 7. Repeat
 
----
-
-### 📷 Execute Mode Result
-
-<!-- ADD IMAGE PATH BELOW -->
-
-![]()
-
----
 
 # Discussion
 
@@ -298,21 +279,6 @@ Dobot’s TCP/IP API offered:
 * Clear motion control structure
 * IO management
 * Real-time feedback
-
----
-
-## Development Time
-
-* Approx. 2 classes
-* Total: ~8 hours
-
----
-
-## Performance
-
-* Pick-and-place cycle: ~10 seconds
-* Depends on travel distance
-
 ---
 
 ## Future Improvements
@@ -338,10 +304,3 @@ It demonstrates a complete pipeline from:
 Camera → Vision → Calibration → Robot Motion → Object Placement
 
 ---
-
-If you want, I can now:
-
-* Convert this into a **ready PDF**
-* Create a **clean academic report format**
-* Add a **technical diagram section**
-* Or generate a **GitHub README version** 🚀
